@@ -1,20 +1,7 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Nov 25 23:44:08 2021
-
-@author: MSI
-"""
 import numpy as np
 import random
 import cv2
 import lockdoor
-##from pyfirmata import Arduino , util
-##import time
-
-##board = Arduino ('COM3')
-##iterator = util.Iterator(board)
-##iterator.start ()
-##LED1 = board.get_pin('d:10:o')
 
 face_cascade = cv2.CascadeClassifier('myhaar.xml')
 mouth_cascade = cv2.CascadeClassifier('Mouth.xml')
@@ -43,6 +30,7 @@ while True:
     (thresh, black_and_white) = cv2.threshold(gray, bw_threshold, 255, cv2.THRESH_BINARY)
     faces = face_cascade.detectMultiScale(gray, 1.1, 4)
     faces_bw = face_cascade.detectMultiScale(black_and_white, 1.1, 4)
+
     if(len(faces) == 0 and len(faces_bw) == 0):
         cv2.putText(img, "Tidak Terdeteksi Wajah...", org, font, font_scale, noface, thickness, cv2.LINE_AA)
     elif(len(faces) == 0 and len(faces_bw) == 1):
@@ -55,10 +43,12 @@ while True:
             roi_gray = gray[y:y + h, x:x + w] ## ROI gray dengan koordinatnya
             roi_color = img[y:y + h, x:x + w] ##ROI color dengan titik koordinatnya
             mouth_rects = mouth_cascade.detectMultiScale(gray, 1.5, 5) 
+
         if(len(mouth_rects) == 0):
             cv2.putText(img, weared_mask, org, font, font_scale, weared_mask_font_color, thickness, cv2.LINE_AA)
             # terbuka
             lockdoor.terbuka()
+
         else:
             for (mx, my, mw, mh) in mouth_rects:
                 if(y < my < y + h):
