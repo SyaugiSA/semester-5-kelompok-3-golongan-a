@@ -7,6 +7,7 @@ Created on Thu Nov 25 23:44:08 2021
 import numpy as np
 import random
 import cv2
+import lockdoor
 ##from pyfirmata import Arduino , util
 ##import time
 
@@ -46,6 +47,8 @@ while True:
         cv2.putText(img, "Tidak Terdeteksi Wajah...", org, font, font_scale, noface, thickness, cv2.LINE_AA)
     elif(len(faces) == 0 and len(faces_bw) == 1):
         cv2.putText(img, weared_mask, org, font, font_scale, weared_mask_font_color, thickness, cv2.LINE_AA)
+        # terbuka
+        lockdoor.terbuka()
     else:
         for (x, y, w, h) in faces:
             cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2) ##jika inputnya cocok maka membounding
@@ -54,11 +57,15 @@ while True:
             mouth_rects = mouth_cascade.detectMultiScale(gray, 1.5, 5) 
         if(len(mouth_rects) == 0):
             cv2.putText(img, weared_mask, org, font, font_scale, weared_mask_font_color, thickness, cv2.LINE_AA)
+            # terbuka
+            lockdoor.terbuka()
         else:
             for (mx, my, mw, mh) in mouth_rects:
                 if(y < my < y + h):
                     cv2.putText(img, not_weared_mask, org, font, font_scale, not_weared_mask_font_color, thickness, cv2.LINE_AA)
-                   ## LED1.write(1)
+                    # terbuka
+                    lockdoor.salah()
+                    ## LED1.write(1)
                     print("Image"+str(count)+"Tersimpan") ##Menyimpan Gambar
                     file="F:/anaconda/picture/No_Mask/"+str(count)+".jpg" ##Gambar tersimpan di F:
                     cv2.imwrite(file, img) ##Menuliskan gambar
