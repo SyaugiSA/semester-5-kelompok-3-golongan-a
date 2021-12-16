@@ -24,6 +24,9 @@ cap.set(3, 640)
 cap.set(4, 480)
 
 while True:
+    # mematikan lampu dan lock door
+    lockdoor.reset()
+
     ret, img = cap.read() ##Membaca Input
     img = cv2.flip(img,1)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #Mengkonfersi gambar menjadi grayscale
@@ -37,6 +40,7 @@ while True:
         cv2.putText(img, weared_mask, org, font, font_scale, weared_mask_font_color, thickness, cv2.LINE_AA)
         # terbuka
         lockdoor.terbuka()
+
     else:
         for (x, y, w, h) in faces:
             cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2) ##jika inputnya cocok maka membounding
@@ -46,16 +50,14 @@ while True:
 
         if(len(mouth_rects) == 0):
             cv2.putText(img, weared_mask, org, font, font_scale, weared_mask_font_color, thickness, cv2.LINE_AA)
-            # terbuka
-            lockdoor.terbuka()
 
         else:
             for (mx, my, mw, mh) in mouth_rects:
                 if(y < my < y + h):
                     cv2.putText(img, not_weared_mask, org, font, font_scale, not_weared_mask_font_color, thickness, cv2.LINE_AA)
-                    # terbuka
-                    lockdoor.salah()
-                    ## LED1.write(1)
+                    # tidak terbuka
+                    lockdoor.tidakTerbuka()
+
                     print("Image"+str(count)+"Tersimpan") ##Menyimpan Gambar
                     file="F:/anaconda/picture/No_Mask/"+str(count)+".jpg" ##Gambar tersimpan di F:
                     cv2.imwrite(file, img) ##Menuliskan gambar
