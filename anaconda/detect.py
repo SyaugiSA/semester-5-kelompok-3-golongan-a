@@ -59,7 +59,7 @@ while True:
                     lockdoor.tidakTerbuka()
 
                     print("Image"+str(count)+"Tersimpan") ##Menyimpan Gambar
-                    file="F:/anaconda/picture/No_Mask/"+str(count)+".jpg" ##Gambar tersimpan di F:
+                    file="G:/My Drive/anaconda/picture/No_Mask/"+str(count)+".jpg" ##Gambar tersimpan di Google Drive
                     cv2.imwrite(file, img) ##Menuliskan gambar
                     count += 1 ##Dengan memasukkan gambar dengan angka ditambah 1
                     break
