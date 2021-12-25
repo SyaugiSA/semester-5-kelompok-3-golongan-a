@@ -1,7 +1,7 @@
 import pyfirmata
 from time import sleep
 
-port = 'COM6'
+port = 'COM5'
 board = pyfirmata.Arduino(port)
 ledHijau = 9
 ledMerah = 10
@@ -14,7 +14,7 @@ def reset():
 def terbuka():
   board.digital[ledHijau].write(0)
   board.digital[lockDoor].write(0)
-  sleep(10)
+  sleep(5)
 
 def tidakTerbuka():
   board.digital[ledMerah].write(0)
