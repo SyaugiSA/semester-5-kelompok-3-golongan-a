@@ -5,9 +5,9 @@ from keras.models import load_model
 import tensorflow
 #import lockdoor
 
-model = load_model('model-017.model')
+model = load_model('model-019.model')
 
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('cascade2.xml')
 mouth_cascade = cv2.CascadeClassifier('Mouth.xml')
 bw_threshold = 80
 
@@ -23,7 +23,7 @@ weared_mask = "Menggunakan Masker"
 not_weared_mask = "Tidak Menggunakan Masker"
 
 ##cap = cv2.imread('')
-cap = cv2.VideoCapture("WhatsApp Video 2021-12-26 at 12.10.59.mp4")
+cap = cv2.VideoCapture("WhatsApp Video 2021-12-26 at 11.33.09.mp4")
 cap.set(3, 640)
 cap.set(4, 480)
 
