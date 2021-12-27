@@ -3,11 +3,11 @@ import random
 import cv2
 from keras.models import load_model
 import tensorflow
-#import lockdoor
+import lockdoor
 
 model = load_model('model-019.model')
 
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+face_cascade = cv2.CascadeClassifier('cascade.xml')
 mouth_cascade = cv2.CascadeClassifier('Mouth.xml')
 bw_threshold = 80
 
@@ -23,13 +23,13 @@ weared_mask = "Menggunakan Masker"
 not_weared_mask = "Tidak Menggunakan Masker"
 
 ##cap = cv2.imread('')
-cap = cv2.VideoCapture("20211226_164424.mp4")
+cap = cv2.VideoCapture(0)
 cap.set(3, 640)
 cap.set(4, 480)
 
 while True:
     # mematikan lampu dan lock door
-    #lockdoor.reset()
+    lockdoor.reset()
 
     ret, img = cap.read() ##Membaca Input
     img = cv2.flip(img,1)
@@ -43,7 +43,7 @@ while True:
     elif(len(faces) == 0 and len(faces_bw) == 1):
         cv2.putText(img, weared_mask, org, font, font_scale, weared_mask_font_color, thickness, cv2.LINE_AA)
         # terbuka
-        #lockdoor.terbuka()
+        lockdoor.terbuka()
 
     else:
         for (x, y, w, h) in faces:
@@ -66,7 +66,7 @@ while True:
                 if(y < my < y + h):
                     cv2.putText(img, not_weared_mask, org, font, font_scale, not_weared_mask_font_color, thickness, cv2.LINE_AA)
                     # tidak terbuka
-                    #lockdoor.tidakTerbuka()
+                    lockdoor.tidakTerbuka()
 
                     print("Image"+str(count)+"Tersimpan") ##Menyimpan Gambar
                     file="G:/My Drive/anaconda/picture/No_Mask/"+str(count)+".jpg" ##Gambar tersimpan di Google Drive
