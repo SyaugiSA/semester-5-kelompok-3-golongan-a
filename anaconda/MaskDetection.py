@@ -3,9 +3,10 @@ import random
 import cv2
 from keras.models import load_model
 import tensorflow
-import lockdoor
+from matplotlib import pyplot as plt
+# import lockdoor
 
-model = load_model('model-019.model')
+model = load_model('model-017.model')
 
 face_cascade = cv2.CascadeClassifier('cascade.xml') ##Memanggil Hasil Training
 mouth_cascade = cv2.CascadeClassifier('Mouth.xml')
@@ -22,10 +23,10 @@ font_scale = 1  ##skala font
 weared_mask = "Menggunakan Masker"
 not_weared_mask = "Tidak Menggunakan Masker"
 
-cap = cv2.VideoCapture("WhatsApp Video 2021-12-28 at 16.36.15.mp4") ##Menginisilisasi Input 
+cap = cv2.VideoCapture(0) ##Menginisilisasi Input 
 while True:
     # mematikan lampu dan lock door
-    lockdoor.reset()
+    # lockdoor.reset()
 
     ret, img = cap.read() ##Membaca Input Yang Telah Diinisilalisasi Inputnya
     img = cv2.flip(img,1)
@@ -33,6 +34,20 @@ while True:
     (thresh, black_and_white) = cv2.threshold(gray, bw_threshold, 255, cv2.THRESH_BINARY)
     faces = face_cascade.detectMultiScale(gray, 1.1, 4) ##Untuk Memulai Mendeteksi MultiScale Gray
     faces_bw = face_cascade.detectMultiScale(black_and_white, 1.1, 4) ##Untuk Memulai Mendeteksi MultiScale Black and WHite
+
+    # histogram rgb
+    # color = ('b','g','r')
+    # for i,col in enumerate(color):
+    #     histr = cv.calcHist([img],[i],None,[256],[0,256])
+    #     plt.plot(histr,color = col)
+    #     plt.xlim([0,256])
+    # plt.show()
+
+    # histogram garyscale
+    # plt.hist(gray.ravel(),256,[0,256]); plt.show()
+
+    # histogram black white
+    # plt.hist(black_and_white.ravel(),256,[0,256]); plt.show()
 
     if(len(faces) == 0 and len(faces_bw) == 0):
         cv2.putText(img, "Tidak Terdeteksi Wajah...", org, font, font_scale, noface, thickness, cv2.LINE_AA)
@@ -45,7 +60,7 @@ while True:
         ##warna font, ketebalan font
         
         # Membuka kunci
-        lockdoor.terbuka()
+        # lockdoor.terbuka()
 
     else:
         for (x, y, w, h) in faces:
@@ -73,7 +88,7 @@ while True:
                     ##warna font, ketebalan font
                     
                     # Kunci tidak terbuka
-                    lockdoor.tidakTerbuka()
+                    # lockdoor.tidakTerbuka()
 
                     print("Image"+str(count)+"Tersimpan") ##Menyimpan Gambar
                     file="G:/My Drive/anaconda/picture/No_Mask/"+str(count)+".jpg" ##Gambar tersimpan di Google Drive
