@@ -1,7 +1,7 @@
 import pyfirmata
 from time import sleep
 
-port = 'COM4'
+port = 'COM3'
 board = pyfirmata.Arduino(port)
 ledHijau = 9
 ledMerah = 10
