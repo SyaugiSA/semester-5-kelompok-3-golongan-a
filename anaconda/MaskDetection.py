@@ -4,9 +4,9 @@ import cv2
 from keras.models import load_model
 import tensorflow
 from matplotlib import pyplot as plt
-import lockdoor
+#import lockdoor
 
-model = load_model('model-016.model')
+model = load_model('model-017.model')
 
 face_cascade = cv2.CascadeClassifier('cascade.xml') ##Memanggil Hasil Training
 mouth_cascade = cv2.CascadeClassifier('Mouth.xml')
@@ -23,15 +23,15 @@ font_scale = 1  ##skala font
 weared_mask = "Menggunakan Masker"
 not_weared_mask = "Tidak Menggunakan Masker"
 
-cap = cv2.VideoCapture(0) ##Menginisilisasi Input 
+cap = cv2.VideoCapture(0) ##Menginisiliasasi Input 
 while True:
     # mematikan lampu dan lock door
-    lockdoor.reset()
+    #lockdoor.reset()
 
     ret, img = cap.read() ##Membaca Input Yang Telah Diinisilalisasi Inputnya
-    img = cv2.flip(img,1)
+    img = cv2.flip(img,1) #fungsi untuk mencerminkan img
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #Proses Mengkonfersi gambar menjadi grayscale
-    (thresh, black_and_white) = cv2.threshold(gray, bw_threshold, 255, cv2.THRESH_BINARY)
+    (thresh, black_and_white) = cv2.threshold(gray, bw_threshold, 255, cv2.THRESH_BINARY) #Proses menggunakan treshold menjadi citra biner 
     faces = face_cascade.detectMultiScale(gray, 1.1, 4) ##Untuk Memulai Mendeteksi MultiScale Gray
     faces_bw = face_cascade.detectMultiScale(black_and_white, 1.1, 4) ##Untuk Memulai Mendeteksi MultiScale Black and WHite
 
@@ -60,7 +60,7 @@ while True:
         ##warna font, ketebalan font
         
         # Membuka kunci
-        lockdoor.terbuka()
+        #lockdoor.terbuka()
 
     else:
         for (x, y, w, h) in faces:
@@ -88,7 +88,7 @@ while True:
                     ##warna font, ketebalan font
                     
                     # Kunci tidak terbuka
-                    lockdoor.tidakTerbuka()
+                    #lockdoor.tidakTerbuka()
 
                     print("Image"+str(count)+"Tersimpan") ##Menyimpan Gambar
                     file="G:/My Drive/anaconda/picture/No_Mask/"+str(count)+".jpg" ##Gambar tersimpan di Google Drive
